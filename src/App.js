@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeProvider } from "styled-components";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import { GlobalStyle } from "./styles/globalStyles";
+import { lightTheme } from "./styles/theme";
+import Helmet from "react-helmet";
+import SignIn from "./pages/SignIn";
+import Register from "./pages/Register";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+const App = () => {
+	const themeStyle = lightTheme;
+	return (
+		<ThemeProvider theme={themeStyle}>
+			<Helmet>
+				<title>Form Component</title>
+				<link
+					href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700;900&family=Ubuntu:wght@400;500;700&display=swap"
+					rel="stylesheet"
+				/>s
+			</Helmet>
+			<GlobalStyle />
+			<Layout>
+				<Switch>
+					<Route exact path={"/"}>
+						<Redirect to="/signin" />
+					</Route>
+					<Route exact path={"/signin"}>
+						<SignIn />
+					</Route>
+					<Route exact path={"/register"}>
+						<Register />
+					</Route>
+				</Switch>
+			</Layout>
+		</ThemeProvider >
+	);
+};
 
 export default App;
